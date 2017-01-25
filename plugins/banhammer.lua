@@ -473,7 +473,7 @@ local lang = redis:get(hash)
 local data = load_data(_config.moderation.data)
 chat = msg.chat_id_
 user = msg.sender_user_id_
- if matches[1] == "kick" and is_mod(msg) then
+ if matches[1] == "اخراج" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -499,7 +499,7 @@ kick_user(matches[2], msg.chat_id_)
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="kick"})
          end
       end
- if matches[1] == "delall" and is_mod(msg) then
+ if matches[1] == "پاک کردن پیام" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -530,7 +530,7 @@ tdcli.deleteMessagesFromUser(msg.chat_id_, matches[2], dl_cb, nil)
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="delall"})
          end
       end
- if matches[1] == "banall" and is_admin(msg) then
+ if matches[1] == "مسدودیت همه" and is_admin(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -569,7 +569,7 @@ kick_user(matches[2], msg.chat_id_)
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="banall"})
       end
    end
- if matches[1] == "unbanall" and is_admin(msg) then
+ if matches[1] == "رفع مسدودیت همه" and is_admin(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -600,7 +600,7 @@ return tdcli.sendMessage(msg.chat_id_, msg.id_, 0, "*کاربر "..matches[2].."
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="unbanall"})
       end
    end
- if matches[1] == "ban" and is_mod(msg) then
+ if matches[1] == "مسدودکردن" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -639,7 +639,7 @@ kick_user(matches[2], msg.chat_id_)
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="ban"})
       end
    end
- if matches[1] == "unban" and is_mod(msg) then
+ if matches[1] == "رفع مسدودیت" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -670,7 +670,7 @@ return tdcli.sendMessage(msg.chat_id_, msg.id_, 0, "*کاربر "..matches[2].."
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="unban"})
       end
    end
- if matches[1] == "silent" and is_mod(msg) then
+ if matches[1] == "خفه کردن" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -708,7 +708,7 @@ data[tostring(chat)]['is_silent_users'][tostring(matches[2])] = ""
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="silent"})
       end
    end
- if matches[1] == "unsilent" and is_mod(msg) then
+ if matches[1] == "رفع خفگی" and is_mod(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -739,7 +739,7 @@ data[tostring(chat)]['is_silent_users'][tostring(matches[2])] = nil
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="unsilent"})
       end
    end
-		if matches[1]:lower() == 'clean' and is_owner(msg) then
+		if matches[1]:lower() == 'پاک کردن' and is_owner(msg) then
 			if matches[2] == 'bans' then
 				if next(data[tostring(chat)]['banned']) == nil then
      if not lang then
@@ -758,7 +758,7 @@ data[tostring(chat)]['is_silent_users'][tostring(matches[2])] = nil
 				return "*تمام کاربران محروم شده از گروه از محرومیت خارج شدند*"
            end
 			end
-			if matches[2] == 'silentlist' then
+			if matches[2] == 'لیست خفه ها' then
 				if next(data[tostring(chat)]['is_silent_users']) == nil then
         if not lang then
 					return "_No_ *silent* _users in this group_"
@@ -777,7 +777,7 @@ data[tostring(chat)]['is_silent_users'][tostring(matches[2])] = nil
                end
 			    end
         end
-		if matches[1]:lower() == 'clean' and is_sudo(msg) then
+		if matches[1]:lower() == 'پاک کردن' and is_sudo(msg) then
 			if matches[2] == 'gbans' then
 				if next(data['gban_users']) == nil then
     if not lang then
@@ -797,43 +797,41 @@ data[tostring(chat)]['is_silent_users'][tostring(matches[2])] = nil
           end
 			end
      end
-if matches[1] == "gbanlist" and is_admin(msg) then
+if matches[1] == "لیست محرومین ربات" and is_admin(msg) then
   return gbanned_list()
  end
-if matches[1] == "silentlist" and is_mod(msg) then
+if matches[1] == "لیست خفه ها" and is_mod(msg) then
   return silent_users_list(chat)
  end
-if matches[1] == "banlist" and is_mod(msg) then
+if matches[1] == "لیست مسدودیها" and is_mod(msg) then
   return banned_list(chat)
  end
 end
 return {
 	patterns = {
-		"^[!/#](banall)$",
-		"^[!/#](banall) (.*)$",
-		"^[!/#](unbanall)$",
-		"^[!/#](unbanall) (.*)$",
-		"^[!/#](gbanlist)$",
-		"^[!/#](ban)$",
-		"^[!/#](ban) (.*)$",
-		"^[!/#](unban)$",
-		"^[!/#](unban) (.*)$",
-		"^[!/#](banlist)$",
-		"^[!/#](silent)$",
-		"^[!/#](silent) (.*)$",
-		"^[!/#](unsilent)$",
-		"^[!/#](unsilent) (.*)$",
-		"^[!/#](silentlist)$",
-		"^[!/#](kick)$",
-		"^[!/#](kick) (.*)$",
-		"^[!/#](delall)$",
-		"^[!/#](delall) (.*)$",
-		"^[!/#](clean) (.*)$",
+		"^(مسدودیت همه)$",
+		"^(مسدودیت همه) (.*)$",
+		"^(رفع مسدودیت همه)$",
+		"^(رفع مسدودیت همه) (.*)$",
+		"^(لیست محرومین ربات)$",
+		"^(مسدودکردن)$",
+		"^(مسدودکردن) (.*)$",
+		"^(رفع مسدودیت)$",
+		"^(رفع مسدودیت) (.*)$",
+		"^(لیست مسدودیها)$",
+		"^(خفه کردن)$",
+		"^(خفه کردن) (.*)$",
+		"^(رفع خفگی)$",
+		"^(رفع خفگی) (.*)$",
+		"^(لیست خفه ها)$",
+		"^(اخراج)$",
+		"^(اخراج) (.*)$",
+		"^(پاک کردن پیام)$",
+		"^(پاک کردن پیام) (.*)$",
+		"^(پاک کردن) (.*)$",
 	},
 	run = run,
 pre_process = pre_process
 }
 
--- http://permag.ir
--- @permag_ir
--- @permag_bots
+-- @botbotvkbot
