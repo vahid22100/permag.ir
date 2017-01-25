@@ -360,7 +360,7 @@ local function run(msg, matches)
 local hash = "gp_lang:"..msg.chat_id_
 local lang = redis:get(hash)
  if tonumber(msg.sender_user_id_) == 123456789 then --Put Your ID
-if matches[1] == "visudo" then
+if matches[1] == "اضافه سودو" then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -381,7 +381,7 @@ tdcli_function ({
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="visudo"})
       end
    end
-if matches[1] == "desudo" then
+if matches[1] == "پاک کردن سودو" then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -403,7 +403,7 @@ tdcli_function ({
       end
    end
 end
-if matches[1] == "adminprom" and is_sudo(msg) then
+if matches[1] == "ادمین کن" and is_sudo(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -424,7 +424,7 @@ tdcli_function ({
     }, action_by_username, {chat_id=msg.chat_id_,username=matches[2],cmd="adminprom"})
       end
    end
-if matches[1] == "admindem" and is_sudo(msg) then
+if matches[1] == "عزل ادمین" and is_sudo(msg) then
 if not matches[2] and tonumber(msg.reply_to_message_id_) ~= 0 then
     tdcli_function ({
       ID = "GetMessage",
@@ -447,7 +447,7 @@ tdcli_function ({
    end
 
 
-if matches[1] == 'creategroup' and is_admin(msg) then
+if matches[1] == 'ساخت گروه' and is_admin(msg) then
 local text = matches[2]
 tdcli.createNewGroupChat({[0] = msg.sender_user_id_}, text)
   if not lang then
@@ -457,7 +457,7 @@ return '_گروه ساخته شد!_'
    end
 end
 
-if matches[1] == 'createsuper' and is_admin(msg) then
+if matches[1] == 'ساخت سوپر گروه' and is_admin(msg) then
 local text = matches[2]
 tdcli.createNewChannelChat({[0] = msg.sender_user_id_}, text)
    if not lang then 
@@ -467,7 +467,7 @@ return '_سوپر گروه ساخته شد!_'
    end
 end
 
-if matches[1] == 'tosuper' and is_admin(msg) then
+if matches[1] == 'تبدیل به سوپرگروه' and is_admin(msg) then
 local id = msg.chat_id_
 tdcli.migrateGroupChatToChannelChat(id)
   if not lang then
@@ -486,7 +486,7 @@ return '*انجام شد!*'
   end
 end
 
-if matches[1] == 'setbotname' and is_sudo(msg) then
+if matches[1] == 'تنظیم نام ربات' and is_sudo(msg) then
 tdcli.changeName(matches[2])
    if not lang then
 return '_Bot Name Changed To:_ *'..matches[2]..'*'
@@ -495,7 +495,7 @@ return '_اسم ربات تغییر کرد به:_ \n*'..matches[2]..'*'
    end
 end
 
-if matches[1] == 'setbotusername' and is_sudo(msg) then
+if matches[1] == 'تنظیم یوزر ربات' and is_sudo(msg) then
 tdcli.changeUsername(matches[2])
    if not lang then
 return '_Bot Username Changed To:_ @'..matches[2]
@@ -504,7 +504,7 @@ return '_یوزرنیم ربات تغییر کرد به:_ \n@'..matches[2]..''
    end
 end
 
-if matches[1] == 'delbotusername' and is_sudo(msg) then
+if matches[1] == 'حذف یوزر ربات' and is_sudo(msg) then
 tdcli.changeUsername('')
    if not lang then
 return '*Done!*'
@@ -513,7 +513,7 @@ return '*انجام شد!*'
   end
 end
 
-if matches[1] == 'markread' then
+if matches[1] == 'تیک دوم' then
 if matches[2] == 'on' then
 redis:set('markread','on')
    if not lang then
@@ -532,19 +532,19 @@ return '_تیک دوم >_ *خاموش*'
    end
 end
 
-if matches[1] == 'sudolist' and is_sudo(msg) then
+if matches[1] == 'لیست سودو' and is_sudo(msg) then
 return sudolist(msg)
     end
-if matches[1] == 'permag' then
+if matches[1] == 'وارتا' then
 return tdcli.sendMessage(msg.chat_id_, msg.id_, 1, _config.info_text, 1, 'html')
     end
-if matches[1] == 'adminlist' and is_admin(msg) then
+if matches[1] == 'لیست ادمین' and is_admin(msg) then
 return adminlist(msg)
     end
-     if matches[1] == 'leave' and is_admin(msg) then
+     if matches[1] == 'ترک کردن' and is_admin(msg) then
   tdcli.changeChatMemberStatus(chat, our_id, 'Left', dl_cb, nil)
    end
-     if matches[1] == 'autoleave' and is_admin(msg) then
+     if matches[1] == 'مرخصی' and is_admin(msg) then
 local hash = 'auto_leave_bot'
 --Enable Auto Leave
      if matches[2] == 'enable' then
@@ -566,30 +566,29 @@ local hash = 'auto_leave_bot'
 end
 return { 
 patterns = { 
-"^[!/#](visudo)$", 
-"^[!/#](desudo)$",
-"^[!/#](sudolist)$",
-"^[!/#](visudo) (.*)$", 
-"^[!/#](desudo) (.*)$",
-"^[!/#](adminprom)$", 
-"^[!/#](admindem)$",
-"^[!/#](adminlist)$",
-"^[!/#](adminprom) (.*)$", 
-"^[!/#](admindem) (.*)$",
-"^[!/#](leave)$",
-"^[!/#](autoleave) (.*)$", 
-"^[!/#](permag)$",
-"^[!/#](creategroup) (.*)$",
-"^[!/#](createsuper) (.*)$",
-"^[!/#](tosuper)$",
-"^[!/#](import) (.*)$",
-"^[!/#](setbotname) (.*)$",
-"^[!/#](setbotusername) (.*)$",
-"^[!/#](delbotusername) (.*)$",
-"^[!/#](markread) (.*)$",
+"^(اضافه سودو)$", 
+"^(پاک کردن سودو)$",
+"^(لیست سودو)$",
+"^(اضافه سودو) (.*)$", 
+"^(پاک کردن سودو) (.*)$",
+"^(ادمین کن)$", 
+"^(عزل ادمین)$",
+"^(لیست ادمین)$",
+"^(ادمین کن) (.*)$", 
+"^(عزل ادمین) (.*)$",
+"^(ترک کردن)$",
+"^(مرخصی) (.*)$", 
+"^(وارتا)$",
+"^(ساخت گروه) (.*)$",
+"^(ساخت سوپر گروه) (.*)$",
+"^(تبدیل به سوپرگروه)$",
+"^(import) (.*)$",
+"^(تنظیم نام ربات) (.*)$",
+"^(تنظیم یوزر ربات) (.*)$",
+"^(حذف یوزر ربات) (.*)$",
+"^(تیک دوم) (.*)$",
 }, 
 run = run 
 }
--- http://permag.ir
--- @permag_ir
--- @permag_bots
+
+-- @botbotvkbot
