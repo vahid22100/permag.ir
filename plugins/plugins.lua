@@ -22,7 +22,7 @@ local function plugin_exists( name )
 end
 
 local function list_all_plugins(only_enabled)
-  local tmp = '\n\n@permag_bots'
+  local tmp = '\n\n@botbotvkbot'
   local text = ''
   local nsum = 0
   for k, v in pairs( plugins_names( )) do
@@ -218,18 +218,17 @@ return {
           "!pl * : reloads all plugins." },
           },
   patterns = {
-    "^[!/#]plist$",
-    "^[!/#](pl) (+) ([%w_%.%-]+)$",
-    "^[!/#](pl) (-) ([%w_%.%-]+)$",
-    "^[!/#](pl) (+) ([%w_%.%-]+) (chat)",
-    "^[!/#](pl) (-) ([%w_%.%-]+) (chat)",
-    "^!pl? (*)$",
-    "^[!/](reload)$"
+    "^plist$",
+    "^(pl) (+) ([%w_%.%-]+)$",
+    "^(pl) (-) ([%w_%.%-]+)$",
+    "^(pl) (+) ([%w_%.%-]+) (chat)",
+    "^(pl) (-) ([%w_%.%-]+) (chat)",
+    "^ pl? (*)$",
+    "^(reload)$"
     },
   run = run
 }
 
 end
--- http://permag.ir
--- @permag_ir
--- @permag_bots
+
+-- @botbotvkbot
